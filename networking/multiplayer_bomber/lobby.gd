@@ -71,6 +71,7 @@ func _on_game_ended() -> void:
 	$NetworkGateway.selectandtrigger_networkoption($NetworkGateway.NETWORK_OPTIONS_MQTT_WEBRTC.NETWORK_OFF)
 	$Connect/HostButton.disabled = true
 	$Connect/JoinButton.disabled = true
+	$Connect/OpenhostList.clear()
 
 #	$Connect/Host.disabled = false
 #	$Connect/Join.disabled = false

@@ -22,10 +22,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -126.0
-offset_top = -177.5
-offset_right = 126.0
-offset_bottom = 177.5
+offset_left = -137.0
+offset_top = -327.0
+offset_right = 115.0
+offset_bottom = 28.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2
@@ -62,6 +62,7 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 
 [node name="PortForward" type="Label" parent="Players"]
+visible = false
 layout_mode = 0
 offset_left = -124.0
 offset_top = 375.0
@@ -73,6 +74,7 @@ make sure the port 10567 in UDP
 is forwarded on your router."
 
 [node name="FindPublicIP" type="LinkButton" parent="Players"]
+visible = false
 layout_mode = 0
 offset_left = 200.0
 offset_top = 409.5
@@ -236,12 +238,11 @@ text = "Join
 [node name="ErrorDialog" type="AcceptDialog" parent="."]
 
 [node name="NetworkGateway" parent="." instance=ExtResource("2_uaob8")]
-visible = false
 layout_mode = 0
-offset_left = 207.0
-offset_top = 312.0
-offset_right = 887.0
-offset_bottom = 700.0
+offset_left = 229.0
+offset_top = 359.0
+offset_right = 909.0
+offset_bottom = 747.0
 
 [connection signal="pressed" from="Players/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Players/FindPublicIP" to="." method="_on_find_public_ip_pressed"]
