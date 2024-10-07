@@ -312,4 +312,15 @@ spawn_path = NodePath("../Players")
 spawn_path = NodePath("..")
 script = ExtResource("6_ac5ja")
 
+[node name="QuitGame" type="Button" parent="."]
+offset_left = 975.0
+offset_top = 583.0
+offset_right = 1019.0
+offset_bottom = 612.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("4")
+text = "Quit"
+
 [connection signal="pressed" from="Winner/ExitGame" to="Score" method="_on_exit_game_pressed"]
+[connection signal="pressed" from="QuitGame" to="Score" method="_on_exit_game_pressed"]

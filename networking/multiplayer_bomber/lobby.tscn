@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://jhdlqsokif5o"]
+[gd_scene load_steps=3 format=3 uid="uid://jhdlqsokif5o"]
 
 [ext_resource type="Script" path="res://lobby.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="2_uaob8"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -86,10 +87,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -138.5
-offset_top = -83.5
-offset_right = 138.5
-offset_bottom = 83.5
+offset_left = -166.0
+offset_top = -311.0
+offset_right = 145.0
+offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2
@@ -97,61 +98,65 @@ size_flags_vertical = 2
 
 [node name="NameLabel" type="Label" parent="Connect"]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 11.0
-offset_right = 56.0
-offset_bottom = 25.0
+offset_left = 13.0
+offset_top = 10.0
+offset_right = 117.0
+offset_bottom = 33.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-text = "Name:"
+text = "Player Name:"
 
 [node name="Name" type="LineEdit" parent="Connect"]
 layout_mode = 0
-offset_left = 17.0
-offset_top = 38.0
-offset_right = 173.0
-offset_bottom = 69.0
+offset_left = 129.0
+offset_top = 6.0
+offset_right = 285.0
+offset_bottom = 37.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "The Warrior"
 
 [node name="IPLabel" type="Label" parent="Connect"]
+visible = false
 layout_mode = 0
-offset_left = 15.0
-offset_top = 74.0
-offset_right = 57.0
-offset_bottom = 97.0
+offset_left = 4.0
+offset_top = 245.0
+offset_right = 46.0
+offset_bottom = 268.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 16
 text = "IP:"
 
 [node name="IPAddress" type="LineEdit" parent="Connect"]
+visible = false
 layout_mode = 0
-offset_left = 17.0
-offset_top = 102.0
-offset_right = 173.0
-offset_bottom = 133.0
+offset_left = 102.0
+offset_top = 249.0
+offset_right = 258.0
+offset_bottom = 280.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "127.0.0.1"
 
 [node name="Host" type="Button" parent="Connect"]
+visible = false
 layout_mode = 0
-offset_left = 181.0
-offset_top = 38.0
-offset_right = 246.0
-offset_bottom = 69.0
+offset_left = 282.0
+offset_top = 239.0
+offset_right = 347.0
+offset_bottom = 270.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Host"
 
 [node name="Join" type="Button" parent="Connect"]
+visible = false
 layout_mode = 0
-offset_left = 181.0
-offset_top = 102.0
-offset_right = 246.0
-offset_bottom = 133.0
+offset_left = 221.0
+offset_top = 251.0
+offset_right = 286.0
+offset_bottom = 282.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Join"
@@ -159,16 +164,90 @@ text = "Join"
 [node name="ErrorLabel" type="Label" parent="Connect"]
 layout_mode = 0
 offset_left = 15.0
-offset_top = 138.0
+offset_top = 247.0
 offset_right = 257.0
-offset_bottom = 161.0
+offset_bottom = 270.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.820312, 0.291595, 0.291595, 1)
 
+[node name="EnterPlaza" type="Button" parent="Connect"]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 39.0
+offset_right = 291.0
+offset_bottom = 70.0
+text = "Enter Plaza"
+
+[node name="PlazaLabel" type="Label" parent="Connect"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 36.0
+offset_right = 103.0
+offset_bottom = 59.0
+text = "Plaza Name:"
+
+[node name="LobbyName" type="LineEdit" parent="Connect"]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 39.0
+offset_right = 186.062
+offset_bottom = 70.0
+text = "berlin"
+
+[node name="OpenhostList" type="ItemList" parent="Connect"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 97.0
+offset_right = 280.0
+offset_bottom = 174.0
+
+[node name="OpenhostLabel" type="Label" parent="Connect"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 67.0
+offset_right = 85.0
+offset_bottom = 90.0
+text = "Open hosts:
+"
+
+[node name="HostButton" type="Button" parent="Connect"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 11.0
+offset_top = 184.0
+offset_right = 55.0
+offset_bottom = 215.0
+disabled = true
+text = "Host
+"
+
+[node name="JoinButton" type="Button" parent="Connect"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 66.0
+offset_top = 183.0
+offset_right = 110.0
+offset_bottom = 214.0
+disabled = true
+text = "Join
+"
+
 [node name="ErrorDialog" type="AcceptDialog" parent="."]
+
+[node name="NetworkGateway" parent="." instance=ExtResource("2_uaob8")]
+visible = false
+layout_mode = 0
+offset_left = 207.0
+offset_top = 312.0
+offset_right = 887.0
+offset_bottom = 700.0
 
 [connection signal="pressed" from="Players/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Players/FindPublicIP" to="." method="_on_find_public_ip_pressed"]
 [connection signal="pressed" from="Connect/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Connect/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Connect/EnterPlaza" to="." method="_on_enter_plaza_pressed"]
+[connection signal="pressed" from="Connect/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Connect/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="xclientstatusesupdate" from="NetworkGateway" to="." method="_on_network_gateway_xclientstatusesupdate"]

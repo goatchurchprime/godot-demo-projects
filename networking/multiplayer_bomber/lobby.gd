@@ -14,7 +14,9 @@ func _ready() -> void:
 		var desktop_path := OS.get_system_dir(OS.SYSTEM_DIR_DESKTOP).replace("\\", "/").split("/")
 		$Connect/Name.text = desktop_path[desktop_path.size() - 2]
 
+	$Connect/Name.text = $NetworkGateway.PlayerConnections.LocalPlayer.playername()
 
+# Deprecated
 func _on_host_pressed() -> void:
 	if $Connect/Name.text == "":
 		$Connect/ErrorLabel.text = "Invalid name!"
@@ -30,6 +32,7 @@ func _on_host_pressed() -> void:
 	refresh_lobby()
 
 
+# Deprecated
 func _on_join_pressed() -> void:
 	if $Connect/Name.text == "":
 		$Connect/ErrorLabel.text = "Invalid name!"
@@ -64,8 +67,14 @@ func _on_game_ended() -> void:
 	show()
 	$Connect.show()
 	$Players.hide()
-	$Connect/Host.disabled = false
-	$Connect/Join.disabled = false
+
+	$NetworkGateway.selectandtrigger_networkoption($NetworkGateway.NETWORK_OPTIONS_MQTT_WEBRTC.NETWORK_OFF)
+	$Connect/HostButton.disabled = true
+	$Connect/JoinButton.disabled = true
+
+#	$Connect/Host.disabled = false
+#	$Connect/Join.disabled = false
+
 
 
 func _on_game_error(errtxt: String) -> void:
@@ -73,6 +82,7 @@ func _on_game_error(errtxt: String) -> void:
 	$ErrorDialog.popup_centered()
 	$Connect/Host.disabled = false
 	$Connect/Join.disabled = false
+
 
 
 func refresh_lobby() -> void:
@@ -92,3 +102,43 @@ func _on_start_pressed() -> void:
 
 func _on_find_public_ip_pressed() -> void:
 	OS.shell_open("https://icanhazip.com/")
+
+func _on_enter_plaza_pressed():
+	$NetworkGateway.MQTTsignalling.Roomnametext.text = $Connect/LobbyName.text
+	$NetworkGateway.PlayerConnections.LocalPlayer.setplayername($Connect/Name.text)
+	$NetworkGateway.selectandtrigger_networkoption($NetworkGateway.NETWORK_OPTIONS_MQTT_WEBRTC.AS_NECESSARY_MANUALCHANGE)
+	$NetworkGateway.set_vox_on()
+	$Connect/HostButton.disabled = false
+	$Connect/JoinButton.disabled = false
+
+func _on_network_gateway_xclientstatusesupdate():
+	print("xx ", $NetworkGateway.MQTTsignalling.xclientstatuses)
+	$Connect/OpenhostList.clear()
+	for s in $NetworkGateway.MQTTsignalling.xclientopenservers:
+		if $NetworkGateway.MQTTsignalling.xclienttreeitems[s].get_child_count() == 0:
+			$Connect/OpenhostList.add_item($NetworkGateway.MQTTsignalling.xclienttreeitems[s].get_text(1) + " " + s)
+
+func _on_host_button_pressed():
+	$Connect.hide()
+	$Players.show()
+	$Connect/ErrorLabel.text = ""
+	var player_name: String = $Connect/Name.text
+	gamestate.player_name = player_name
+	$NetworkGateway.selectandtrigger_networkoption($NetworkGateway.NETWORK_OPTIONS_MQTT_WEBRTC.AS_SERVER)
+	get_window().title = ProjectSettings.get_setting("application/config/name") + ": Server (%s)" % $Connect/Name.text
+	refresh_lobby()
+
+func _on_join_button_pressed():
+	var ks = $Connect/OpenhostList.get_selected_items()
+	var k = (0 if len(ks) == 0 else ks[0])
+	if k >= $Connect/OpenhostList.get_item_count():
+		printerr("No host to connected to")
+		return
+	var ss = $Connect/OpenhostList.get_item_text(k)
+	var s = ss.rsplit(" ")[-1]
+	prints("ss ", s, ss)
+	$NetworkGateway.MQTTsignalling.Roomplayertree.set_selected($NetworkGateway.MQTTsignalling.xclienttreeitems[s], 0)
+	var player_name: String = $Connect/Name.text
+	gamestate.player_name = player_name
+	get_window().title = ProjectSettings.get_setting("application/config/name") + ": Client (%s)" % $Connect/Name.text
+	$NetworkGateway.selectandtrigger_networkoption($NetworkGateway.NETWORK_OPTIONS_MQTT_WEBRTC.AS_CLIENT)
