@@ -31,7 +31,6 @@ func _process(delta):
 		#print(chunk[100])
 		if isrecording and $AudioStreamMicButton.button_pressed:
 			chunks.append(chunk)
-			
 
 func _on_record_button_pressed() -> void:
 	if isrecording:
@@ -41,7 +40,7 @@ func _on_record_button_pressed() -> void:
 			recording.set_format(format)
 			recording.set_stereo(stereo)
 			assert (format == 1)
-			assert (stereo == true)
+			assert (stereo)
 			var data = PackedByteArray()
 			data.resize(4*len(chunks)*chunksize)
 			for j in range(len(chunks)):
