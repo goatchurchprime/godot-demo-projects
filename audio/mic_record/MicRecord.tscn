@@ -58,6 +58,15 @@ offset_bottom = 117.0
 disabled = true
 text = "Play"
 
+[node name="AudioStreamMicButton" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 371.0
+offset_top = 82.0
+offset_right = 581.0
+offset_bottom = 113.0
+tooltip_text = "Use AudioStreamPlaybackMicrophone from https://github.com/godotengine/godot/pull/100508"
+text = "PlaybackMicrophone"
+
 [node name="PlayMusic" type="Button" parent="."]
 layout_mode = 0
 offset_left = 30.0

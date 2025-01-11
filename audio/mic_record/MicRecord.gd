@@ -7,7 +7,7 @@ var stereo := true
 var mix_rate := 44100  # This is the default mix rate on recordings.
 var format := AudioStreamWAV.FORMAT_16_BITS  # This is the default format on recordings.
 
-var audiostreamplaybackmicrophone : AudioStreamPlaybackMicrophone = null
+var audiostreamplaybackmicrophone = null
 const chunksize = 1000
 var chunks = [ ]
 var isrecording = false
@@ -16,24 +16,26 @@ func _ready() -> void:
 	var idx := AudioServer.get_bus_index("Record")
 	effect = AudioServer.get_bus_effect(idx, 0)
 	if ClassDB.can_instantiate("AudioStreamPlaybackMicrophone"):
-		print("Instantiating AudioStreamPlaybackMinstantiate")
+		print("Instantiating AudioStreamPlaybackMicrophone")
 		audiostreamplaybackmicrophone = ClassDB.instantiate("AudioStreamPlaybackMicrophone")
 		audiostreamplaybackmicrophone.start_microphone()
+		$AudioStreamMicButton.button_pressed = true
+	else:
+		$AudioStreamMicButton.disabled = true
 
 func _process(delta):
 	while audiostreamplaybackmicrophone and audiostreamplaybackmicrophone.is_microphone_playing():
 		var chunk = audiostreamplaybackmicrophone.get_microphone_buffer(chunksize)
-		if chunk:
-			print(chunk[100])
-		else:
+		if not chunk:
 			break
-		if isrecording:
+		#print(chunk[100])
+		if isrecording and $AudioStreamMicButton.button_pressed:
 			chunks.append(chunk)
 			
 
 func _on_record_button_pressed() -> void:
 	if isrecording:
-		if audiostreamplaybackmicrophone:
+		if audiostreamplaybackmicrophone and $AudioStreamMicButton.button_pressed:
 			recording = AudioStreamWAV.new()
 			recording.set_mix_rate(mix_rate)
 			recording.set_format(format)
@@ -53,6 +55,7 @@ func _on_record_button_pressed() -> void:
 					data[k+2] = (fr & 255)
 					data[k+3] = ((fr >> 8) & 255)
 			recording.data = data
+			$AudioStreamMicButton.disabled = false
 		else:
 			recording = effect.get_recording()
 			effect.set_recording_active(false)
@@ -70,11 +73,13 @@ func _on_record_button_pressed() -> void:
 		$SaveButton.disabled = true
 		$RecordButton.text = "Stop"
 		$Status.text = "Status: Recording..."
-		if audiostreamplaybackmicrophone:
+		if audiostreamplaybackmicrophone and $AudioStreamMicButton.button_pressed:
 			while audiostreamplaybackmicrophone.get_microphone_buffer(100):
 				pass
+			$AudioStreamMicButton.disabled = true
 		else:
 			effect.set_recording_active(true)
+			$AudioStreamRecord.play()
 
 		chunks = [ ]
 		isrecording = true
