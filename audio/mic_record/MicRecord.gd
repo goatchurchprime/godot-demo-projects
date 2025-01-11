@@ -7,30 +7,77 @@ var stereo := true
 var mix_rate := 44100  # This is the default mix rate on recordings.
 var format := AudioStreamWAV.FORMAT_16_BITS  # This is the default format on recordings.
 
+var audiostreamplaybackmicrophone : AudioStreamPlaybackMicrophone = null
+const chunksize = 1000
+var chunks = [ ]
+var isrecording = false
 
 func _ready() -> void:
 	var idx := AudioServer.get_bus_index("Record")
 	effect = AudioServer.get_bus_effect(idx, 0)
+	if ClassDB.can_instantiate("AudioStreamPlaybackMicrophone"):
+		print("Instantiating AudioStreamPlaybackMinstantiate")
+		audiostreamplaybackmicrophone = ClassDB.instantiate("AudioStreamPlaybackMicrophone")
+		audiostreamplaybackmicrophone.start_microphone()
 
+func _process(delta):
+	while audiostreamplaybackmicrophone and audiostreamplaybackmicrophone.is_microphone_playing():
+		var chunk = audiostreamplaybackmicrophone.get_microphone_buffer(chunksize)
+		if chunk:
+			print(chunk[100])
+		else:
+			break
+		if isrecording:
+			chunks.append(chunk)
+			
 
 func _on_record_button_pressed() -> void:
-	if effect.is_recording_active():
-		recording = effect.get_recording()
+	if isrecording:
+		if audiostreamplaybackmicrophone:
+			recording = AudioStreamWAV.new()
+			recording.set_mix_rate(mix_rate)
+			recording.set_format(format)
+			recording.set_stereo(stereo)
+			assert (format == 1)
+			assert (stereo == true)
+			var data = PackedByteArray()
+			data.resize(4*len(chunks)*chunksize)
+			for j in range(len(chunks)):
+				for i in range(chunksize):
+					var k = 4*(j*chunksize + i)
+					var frame = chunks[j][i]
+					var fl = int(frame.x*32767)
+					var fr = int(frame.y*32767)
+					data[k] = (fl & 255)
+					data[k+1] = ((fl >> 8) & 255)
+					data[k+2] = (fr & 255)
+					data[k+3] = ((fr >> 8) & 255)
+			recording.data = data
+		else:
+			recording = effect.get_recording()
+			effect.set_recording_active(false)
+			recording.set_mix_rate(mix_rate)
+			recording.set_format(format)
+			recording.set_stereo(stereo)
 		$PlayButton.disabled = false
 		$SaveButton.disabled = false
-		effect.set_recording_active(false)
-		recording.set_mix_rate(mix_rate)
-		recording.set_format(format)
-		recording.set_stereo(stereo)
 		$RecordButton.text = "Record"
 		$Status.text = ""
+		isrecording = false
+
 	else:
 		$PlayButton.disabled = true
 		$SaveButton.disabled = true
-		effect.set_recording_active(true)
 		$RecordButton.text = "Stop"
 		$Status.text = "Status: Recording..."
+		if audiostreamplaybackmicrophone:
+			while audiostreamplaybackmicrophone.get_microphone_buffer(100):
+				pass
+		else:
+			effect.set_recording_active(true)
 
+		chunks = [ ]
+		isrecording = true
 
 func _on_play_button_pressed() -> void:
 	print_rich("\n[b]Playing recording:[/b] %s" % recording)
@@ -96,4 +143,3 @@ func _on_stereo_check_button_toggled(button_pressed: bool) -> void:
 
 func _on_open_user_folder_button_pressed() -> void:
 	OS.shell_open(ProjectSettings.globalize_path("user://"))
-
