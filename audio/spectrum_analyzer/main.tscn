@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://eop0rhdingr3"]
+
+[ext_resource type="PackedScene" uid="uid://bgebbrb5nvo80" path="res://generator.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://cmlhdxarg7f4v" path="res://spectrum_plot.gd" id="2_h2yge"]
+
+[node name="Main" type="Node2D" unique_id=1966041235]
+
+[node name="Generator" parent="." unique_id=143080025 instance=ExtResource("1_0xm2m")]
+offset_left = 146.0
+offset_top = 28.0
+offset_right = 646.0
+offset_bottom = 62.0
+
+[node name="SpectrumPlot" type="VBoxContainer" parent="." unique_id=794315408]
+offset_left = 205.0
+offset_top = 158.0
+offset_right = 605.0
+offset_bottom = 283.0
+script = ExtResource("2_h2yge")
+
+[node name="HBox" type="HBoxContainer" parent="SpectrumPlot" unique_id=893154236]
+layout_mode = 2
+
+[node name="FFTSize" type="OptionButton" parent="SpectrumPlot/HBox" unique_id=719641925]
+layout_mode = 2
+selected = 3
+item_count = 5
+popup/item_0/text = "256"
+popup/item_0/id = 0
+popup/item_1/text = "512"
+popup/item_1/id = 1
+popup/item_2/text = "1024"
+popup/item_2/id = 2
+popup/item_3/text = "2048"
+popup/item_3/id = 3
+popup/item_4/text = "4096"
+popup/item_4/id = 4
+
+[node name="BufferLength" type="OptionButton" parent="SpectrumPlot/HBox" unique_id=1884824718]
+layout_mode = 2
+selected = 3
+item_count = 4
+popup/item_0/text = "0.1"
+popup/item_0/id = 0
+popup/item_1/text = "0.5"
+popup/item_1/id = 1
+popup/item_2/text = "1.0"
+popup/item_2/id = 2
+popup/item_3/text = "2.0"
+popup/item_3/id = 3
+
+[node name="ColorRect" type="ColorRect" parent="SpectrumPlot" unique_id=1287656428]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 2
+color = Color(1.2032687e-07, 0.35897544, 0.35898915, 1)
+
+[node name="Scaler" type="Node2D" parent="SpectrumPlot/ColorRect" unique_id=274536637]
+position = Vector2(0, 90)
+scale = Vector2(400, -90)
+
+[node name="Line2D" type="Line2D" parent="SpectrumPlot/ColorRect/Scaler" unique_id=653189345]
+points = PackedVector2Array(0, 0, 0.20333338, 0.38500005, 0.22333336, 0.24999994, 0.31333333, 0.32999998, 1, 1)
+width = 0.01
+
+[connection signal="item_selected" from="SpectrumPlot/HBox/FFTSize" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
+[connection signal="item_selected" from="SpectrumPlot/HBox/BufferLength" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
