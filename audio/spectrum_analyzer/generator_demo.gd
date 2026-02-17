@@ -35,7 +35,6 @@ func _ready() -> void:
 	_fill_buffer()
 	$Player.volume_db = linear_to_db($VolumeHSlider.value)
 
-
 func _on_frequency_h_slider_value_changed(value: float) -> void:
 	%FrequencyLabel.text = "%d Hz" % value
 	pulse_hz = value

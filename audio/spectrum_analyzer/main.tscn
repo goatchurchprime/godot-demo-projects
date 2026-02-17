@@ -46,10 +46,10 @@ offset_right = 605.0
 offset_bottom = 283.0
 script = ExtResource("2_h2yge")
 
-[node name="HBox" type="HBoxContainer" parent="SpectrumPlot" unique_id=893154236]
+[node name="HBoxFFT" type="HBoxContainer" parent="SpectrumPlot" unique_id=893154236]
 layout_mode = 2
 
-[node name="FFTSize" type="OptionButton" parent="SpectrumPlot/HBox" unique_id=719641925]
+[node name="FFTSize" type="OptionButton" parent="SpectrumPlot/HBoxFFT" unique_id=719641925]
 layout_mode = 2
 selected = 3
 item_count = 5
@@ -64,7 +64,7 @@ popup/item_3/id = 3
 popup/item_4/text = "4096"
 popup/item_4/id = 4
 
-[node name="BufferLength" type="OptionButton" parent="SpectrumPlot/HBox" unique_id=1884824718]
+[node name="BufferLength" type="OptionButton" parent="SpectrumPlot/HBoxFFT" unique_id=1884824718]
 layout_mode = 2
 selected = 3
 item_count = 4
@@ -77,7 +77,7 @@ popup/item_2/id = 2
 popup/item_3/text = "2.0"
 popup/item_3/id = 3
 
-[node name="MaxAvg" type="OptionButton" parent="SpectrumPlot/HBox" unique_id=470623480]
+[node name="MaxAvg" type="OptionButton" parent="SpectrumPlot/HBoxFFT" unique_id=470623480]
 layout_mode = 2
 selected = 0
 item_count = 2
@@ -85,6 +85,35 @@ popup/item_0/text = "Max"
 popup/item_0/id = 0
 popup/item_1/text = "Avg"
 popup/item_1/id = 1
+
+[node name="VBoxSingleRange" type="VBoxContainer" parent="SpectrumPlot" unique_id=2008239504]
+layout_mode = 2
+
+[node name="HBoxLo" type="HBoxContainer" parent="SpectrumPlot/VBoxSingleRange" unique_id=824117934]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SpectrumPlot/VBoxSingleRange/HBoxLo" unique_id=1849449421]
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="SpectrumPlot/VBoxSingleRange/HBoxLo" unique_id=1613772833]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 100.0
+max_value = 4000.0
+value = 100.0
+
+[node name="HBoxHi" type="HBoxContainer" parent="SpectrumPlot/VBoxSingleRange" unique_id=1757876835]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SpectrumPlot/VBoxSingleRange/HBoxHi" unique_id=2111354946]
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="SpectrumPlot/VBoxSingleRange/HBoxHi" unique_id=1500227882]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 100.0
+max_value = 4000.0
+value = 100.0
 
 [node name="ColorRect" type="ColorRect" parent="SpectrumPlot" unique_id=1287656428]
 custom_minimum_size = Vector2(600, 200)
@@ -99,6 +128,13 @@ scale = Vector2(400, -90)
 points = PackedVector2Array(0, 0, 0.20333338, 0.38500005, 0.22333336, 0.24999994, 0.31333333, 0.32999998, 1, 1)
 width = 0.01
 
+[node name="Polygon2D" type="Polygon2D" parent="SpectrumPlot/ColorRect/Scaler" unique_id=1613691417]
+position = Vector2(0, 1)
+scale = Vector2(0.0025, -0.011111111)
+polygon = PackedVector2Array(128, 145, 317, 96)
+
 [connection signal="pressed" from="Sounds/PlayButton" to="Sounds" method="_on_play_button_pressed"]
-[connection signal="item_selected" from="SpectrumPlot/HBox/FFTSize" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
-[connection signal="item_selected" from="SpectrumPlot/HBox/BufferLength" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
+[connection signal="item_selected" from="SpectrumPlot/HBoxFFT/FFTSize" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
+[connection signal="item_selected" from="SpectrumPlot/HBoxFFT/BufferLength" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
+[connection signal="value_changed" from="SpectrumPlot/VBoxSingleRange/HBoxLo/HSlider" to="SpectrumPlot" method="_on_h_slider_value_changed" binds= [0]]
+[connection signal="value_changed" from="SpectrumPlot/VBoxSingleRange/HBoxHi/HSlider" to="SpectrumPlot" method="_on_h_slider_value_changed" binds= [1]]
