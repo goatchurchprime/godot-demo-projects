@@ -43,6 +43,7 @@ func _process(delta):
 	var pts : PackedVector2Array = PackedVector2Array()
 	pts.resize(60)
 	var maxvs = 0.0001
+	var mode = AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_MAX if $HBox/MaxAvg.selected == 0 else AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_AVERAGE
 	for i in range(60):
 		var hz = i*50.0 + 25
 		var vs = spectrumanalyzerinstance.get_magnitude_for_frequency_range(hz-25, hz+25, AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_MAX)

@@ -42,7 +42,7 @@ size_flags_vertical = 1
 min_value = 0.001
 max_value = 1.0
 step = 0.001
-value = 0.25
+value = 0.001
 
 [node name="Sweep" type="OptionButton" parent="." unique_id=732904188]
 layout_mode = 2

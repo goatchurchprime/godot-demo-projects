@@ -33,6 +33,7 @@ func _ready() -> void:
 	# `_fill_buffer` must be called *after* setting `playback`,
 	# as `fill_buffer` uses the `playback` member variable.
 	_fill_buffer()
+	$Player.volume_db = linear_to_db($VolumeHSlider.value)
 
 
 func _on_frequency_h_slider_value_changed(value: float) -> void:
