@@ -1,8 +1,13 @@
 [gd_resource type="AudioBusLayout" format=3 uid="uid://bwvhfdsy0nbuj"]
 
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_j3pel"]
+resource_name = "LowPassFilter"
+
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_j3pel"]
 resource_name = "SpectrumAnalyzer"
 
 [resource]
-bus/0/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_j3pel")
+bus/0/effect/0/effect = SubResource("AudioEffectLowPassFilter_j3pel")
 bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_j3pel")
+bus/0/effect/1/enabled = true

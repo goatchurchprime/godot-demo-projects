@@ -3,8 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://bgebbrb5nvo80" path="res://generator.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://dq2gersvq2uf4" path="res://sounds.gd" id="2_1bvp3"]
 [ext_resource type="Script" uid="uid://cmlhdxarg7f4v" path="res://spectrum_plot.gd" id="2_h2yge"]
+[ext_resource type="Shader" uid="uid://b3w63xlydd2h7" path="res://spectrum.gdshader" id="4_1bvp3"]
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_lquwl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
+shader = ExtResource("4_1bvp3")
+shader_parameter/mfac = 2.0
 
 [node name="Main" type="Node2D" unique_id=1966041235]
 
@@ -48,6 +53,10 @@ script = ExtResource("2_h2yge")
 
 [node name="HBoxFFT" type="HBoxContainer" parent="SpectrumPlot" unique_id=893154236]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="SpectrumPlot/HBoxFFT" unique_id=992105717]
+layout_mode = 2
+text = "FFT parameters:"
 
 [node name="FFTSize" type="OptionButton" parent="SpectrumPlot/HBoxFFT" unique_id=719641925]
 layout_mode = 2
@@ -115,12 +124,37 @@ min_value = 100.0
 max_value = 4000.0
 value = 100.0
 
+[node name="HBoxVolume" type="HBoxContainer" parent="SpectrumPlot" unique_id=1695098603]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SpectrumPlot/HBoxVolume" unique_id=1551221813]
+layout_mode = 2
+text = "-12.04 dB"
+
+[node name="VolumeHSlider" type="HSlider" parent="SpectrumPlot/HBoxVolume" unique_id=1274764155]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.001
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="Index0" type="SpinBox" parent="SpectrumPlot/HBoxVolume" unique_id=613278326]
+layout_mode = 2
+
+[node name="HzRange" type="Label" parent="SpectrumPlot/HBoxVolume" unique_id=1886665835]
+layout_mode = 2
+text = "0 - 100 Hz"
+
 [node name="ColorRect" type="ColorRect" parent="SpectrumPlot" unique_id=1287656428]
+material = SubResource("ShaderMaterial_lquwl")
 custom_minimum_size = Vector2(600, 200)
 layout_mode = 2
 color = Color(1.2032687e-07, 0.35897544, 0.35898915, 1)
 
 [node name="Scaler" type="Node2D" parent="SpectrumPlot/ColorRect" unique_id=274536637]
+visible = false
 position = Vector2(0, 90)
 scale = Vector2(400, -90)
 
@@ -138,3 +172,5 @@ polygon = PackedVector2Array(128, 145, 317, 96)
 [connection signal="item_selected" from="SpectrumPlot/HBoxFFT/BufferLength" to="SpectrumPlot" method="refresh_analyzer_instance" unbinds=1]
 [connection signal="value_changed" from="SpectrumPlot/VBoxSingleRange/HBoxLo/HSlider" to="SpectrumPlot" method="_on_h_slider_value_changed" binds= [0]]
 [connection signal="value_changed" from="SpectrumPlot/VBoxSingleRange/HBoxHi/HSlider" to="SpectrumPlot" method="_on_h_slider_value_changed" binds= [1]]
+[connection signal="value_changed" from="SpectrumPlot/HBoxVolume/VolumeHSlider" to="SpectrumPlot" method="_on_volume_h_slider_value_changed"]
+[connection signal="value_changed" from="SpectrumPlot/HBoxVolume/Index0" to="SpectrumPlot" method="_on_index_0_value_changed"]
