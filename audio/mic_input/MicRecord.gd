@@ -56,8 +56,8 @@ func _on_option_output_item_selected(index: int) -> void:
 	var previous_output_mix_rate := AudioServer.get_mix_rate()
 	AudioServer.set_output_device(output_device)
 
-	# Currently there is no way to turn off audio output or restart it, 
-	# So major changes such as its mix_rate will cause problems
+	# Currently there is no way to turn off audio output or restart it and reallocate the buffers,
+	# so major changes such as to the mix_rate may cause problems
 	# See https://github.com/godotengine/godot-proposals/issues/14962
 	await get_tree().create_timer(1.0).timeout
 	var new_output_mix_rate := AudioServer.get_mix_rate()
