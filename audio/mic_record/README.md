@@ -1,4 +1,4 @@
-This example project contains two demonstrations for accessing the microphone.
+This example project shows two different ways to access the microphone.
 
 Language: GDScript
 
@@ -10,7 +10,7 @@ Check out this demo on the Asset Store: https://store.godotengine.org/asset/godo
 
 # MicInput
 
-This scene reads microphone audio input data using the
+This scene reads microphone audio input data on a process loop using the
 [AudioServer.get_input_frames(frames: int) -> PackedVector2Array](https://docs.godotengine.org/en/stable/classes/class_audioserver.html#class-audioserver-method-get-input-frames) function.
 
 The Microphone is turned on at startup. To change the Input Device
@@ -18,7 +18,7 @@ you must to turn it off first.
 
 Play the music to test the speakers are working.
 
-Play the sinusoidal tone (from another device, such as a mobile phone) to see how the sound waves can be displaced in time if you have a stereo microphone.
+Play the sinusoidal tone (from another device, such as a mobile phone) to experiment with the time displacement on a stereo microphone.
 
 To simulate the common use case of Voice over IP (VoIP) this demo
 includes a time delay playback buffer with a changeable lag length when you click on `Stream Input To Output`.
