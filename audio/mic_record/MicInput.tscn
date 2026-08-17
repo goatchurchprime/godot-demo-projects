@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" uid="uid://dbbfvbf6ronrp" path="res://MicInput.gd" id="1_2l5xs"]
-[ext_resource type="AudioStream" uid="uid://c2re52petqrvx" path="res://Intro.ogg" id="2_p5lee"]
+[ext_resource type="AudioStream" uid="uid://bgqfd2ntpuhgs" path="res://Intro.ogg" id="2_p5lee"]
 [ext_resource type="Shader" uid="uid://cl4x5tyii4r6q" path="res://MicInput.gdshader" id="3_lanq8"]
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_tfvr1"]
@@ -225,7 +225,7 @@ layout_mode = 2
 [node name="RecordingLoop" type="Button" parent="VBox/HBoxMicOut" unique_id=405916058]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Substitute the recording for microphone data on a loop to save talking"
+tooltip_text = "Substitute the microphone data as it is read with the recorded sound"
 disabled = true
 toggle_mode = true
 text = "Loop Recording Input"

@@ -26,7 +26,7 @@ The actual playback buffer aims for the target delay by either pausing or speedi
 An `AudioEffectPitchShift` is used to lower the pitch of the playback to compensate
 for the speedup.
 
-To save your voice when testing the system, you can replay a short section of audio on a loop by toggling the button `Loop Recording Input`.
+The `Loop Recording Input` button substitutes the microphone data for the recorded sound (on a loop) so you don't have to keep talking to test the Pitch Shift system.
 
 # MicRecord
 
