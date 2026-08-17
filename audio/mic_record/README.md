@@ -14,9 +14,9 @@ This scene reads microphone audio input data on a process loop using the
 [AudioServer.get_input_frames(frames: int) -> PackedVector2Array](https://docs.godotengine.org/en/stable/classes/class_audioserver.html#class-audioserver-method-get-input-frames) function.
 
 The Microphone is turned on at startup. To change the Input Device
-you must to turn it off first.
+you must turn it off first.
 
-Play the music to test the speakers are working.
+Play the music to test that the speakers are working.
 
 Play the sinusoidal tone (from another device, such as a mobile phone) to experiment with the time displacement on a stereo microphone.
 

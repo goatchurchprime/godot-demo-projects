@@ -1,7 +1,7 @@
 shader_type canvas_item;
 render_mode blend_mix;
 
-uniform sampler2D audiosample : repeat_enable;
+uniform sampler2D audio_sample : repeat_enable;
 const float cfac = 4.0;
 const float mfac = 2.0;
 const float mdisp = 0.166667;

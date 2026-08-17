@@ -33,7 +33,7 @@ func _ready() -> void:
 	%OutputMixRate.text = "Mix Rate: %d Hz" % AudioServer.get_mix_rate()
 	print("Project mix rate: ", ProjectSettings.get(&"audio/driver/mix_rate"))
 
-	if not AudioServer.has_method("get_input_frames"):
+	if not AudioServer.has_method(&"get_input_frames"):
 		%Status.text = "**** Error: Needs version > 4.6"  # https://github.com/godotengine/godot/pull/113288
 		print(%Status.text)
 		set_process(false)
@@ -48,7 +48,8 @@ func _on_option_input_item_selected(index: int) -> void:
 	var input_device: String = %OptionInput.get_item_text(index)
 	print("Set input device: ", input_device)
 	AudioServer.set_input_device(input_device)
-	assert (not microphone_active)
+	assert(not microphone_active)
+
 
 func _on_option_output_item_selected(index: int) -> void:
 	var output_device: String = %OptionOutput.get_item_text(index)
@@ -108,7 +109,7 @@ func on_microphone_input_start() -> void:
 	blank_image.resize(audio_sample_size)
 	audio_sample_image = Image.create_from_data(audio_sample_size, 1, false, Image.FORMAT_RGF, blank_image.to_byte_array())
 	audio_sample_texture = ImageTexture.create_from_image(audio_sample_image)
-	%MicTexture.material.set_shader_parameter(&"audiosample", audio_sample_texture)
+	%MicTexture.material.set_shader_parameter(&"audio_sample", audio_sample_texture)
 
 func _on_mic_to_generator_toggled(toggled_on: bool) -> void:
 	$AudioGeneratorFeedback.playing = toggled_on
