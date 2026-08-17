@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dvjlkpjvjxn0h"]
 
-[ext_resource type="Script" uid="uid://dbbfvbf6ronrp" path="res://MicRecord.gd" id="1"]
-[ext_resource type="AudioStream" uid="uid://c2re52petqrvx" path="res://Intro.ogg" id="2"]
-[ext_resource type="Shader" uid="uid://cl4x5tyii4r6q" path="res://MicRecord.gdshader" id="3_vkk4n"]
+[ext_resource type="Script" uid="uid://dbbfvbf6ronrp" path="res://MicInput.gd" id="1_2l5xs"]
+[ext_resource type="AudioStream" uid="uid://c2re52petqrvx" path="res://Intro.ogg" id="2_p5lee"]
+[ext_resource type="Shader" uid="uid://cl4x5tyii4r6q" path="res://MicInput.gdshader" id="3_lanq8"]
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_tfvr1"]
 
@@ -25,16 +25,16 @@ corner_radius_bottom_left = 4
 bg_color = Color(0.44331825, 0.15301463, 0.96891576, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m4htd"]
-shader = ExtResource("3_vkk4n")
+shader = ExtResource("3_lanq8")
 
-[node name="MicRecord" type="Control" unique_id=891494926]
+[node name="MicInput" type="Control" unique_id=891494926]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1")
+script = ExtResource("1_2l5xs")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=670440240]
 stream = SubResource("AudioStreamMicrophone_tfvr1")
@@ -43,7 +43,7 @@ stream = SubResource("AudioStreamMicrophone_tfvr1")
 autoplay = true
 
 [node name="AudioMusic" type="AudioStreamPlayer" parent="." unique_id=651472138]
-stream = ExtResource("2")
+stream = ExtResource("2_p5lee")
 volume_db = -6.0
 
 [node name="AudioGeneratorTone" type="AudioStreamPlayer" parent="." unique_id=196621827]
