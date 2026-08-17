@@ -30,7 +30,7 @@ To save your voice when testing the system, you can replay a short section of au
 
 # MicRecord
 
-This scene plays an [AudioStreamMicrophone](https://docs.godotengine.org/en/stable/classes/class_audiostreammicrophone.html) to a muted bus to capture its data using an 
+This scene plays an [AudioStreamMicrophone](https://docs.godotengine.org/en/stable/classes/class_audiostreammicrophone.html) to a muted bus to capture its data using an
 [AudioEffectRecord](https://docs.godotengine.org/en/stable/classes/class_audioeffectrecord.html)
 where it can be played back or saved to a file.
 
